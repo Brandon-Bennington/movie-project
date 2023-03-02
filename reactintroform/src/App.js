@@ -1,125 +1,167 @@
-
-import { configure } from '@testing-library/react';
-import React, { useState } from 'react';
+import logo from './logo.svg';
 import './App.css';
+import Table from './components/Table'
+import MovieForm from './components/MovieForm';
+import SearchBar from './components/SearchBar';
+import { useState } from 'react';
 
-
-  // State variables for each field in the form
 function App() {
-    const [movies, setMovies] = useState([]);
-    const [title, setTitle] = useState('');
-    const [director, setDirector] = useState('');
-    const [actors, setActors] = useState('');
-    const [plot, setPlot] = useState('');
-    const [year, setYear] = useState(0);
-    const [imdbRating, setImdbRating] = useState(0);
+	
+  const moviesData = [
+		{
+			title: "The Godfather",
+			actors: ["Marlon Brando", "Al Pacino", "James Caan"],
+			plot: "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.",
+			genre: "Crime, Drama",
+			imdbRating: 9.2,
+			director: "Francis Ford Coppola",
+			year: 1972,
+			dateAdded: new Date().toISOString(),
+		},
+		{
+			title: "The Shawshank Redemption",
+			actors: ["Tim Robbins", "Morgan Freeman", "Bob Gunton"],
+			plot: "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
+			genre: "Drama",
+			imdbRating: 9.3,
+			director: "Frank Darabont",
+			year: 1994,
+			dateAdded: new Date().toISOString(),
+		},
+		{
+			title: "The Dark Knight",
+			actors: ["Christian Bale", "Heath Ledger", "Aaron Eckhart"],
+			plot: "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.",
+			genre: "Action, Crime, Drama",
+			imdbRating: 9.0,
+			director: "Christopher Nolan",
+			year: 2008,
+			dateAdded: new Date().toISOString(),
+		},
+		{
+			title: "Pulp Fiction",
+			actors: ["John Travolta", "Samuel L. Jackson", "Uma Thurman"],
+			plot: "The lives of two mob hitmen, a boxer, a gangster and his wife, and a pair of diner bandits intertwine in four tales of violence and redemption.",
+			genre: "Crime, Drama",
+			imdbRating: 8.9,
+			director: "Quentin Tarantino",
+			year: 1994,
+			dateAdded: new Date().toISOString(),
+		},
+		{
+			title: "The Lord of the Rings: The Return of the King",
+			actors: ["Elijah Wood", "Viggo Mortensen", "Ian McKellen"],
+			plot: "Gandalf and Aragorn lead the World of Men against Sauron's army to draw his gaze from Frodo and Sam as they approach Mount Doom with the One Ring.",
+			genre: "Action, Adventure, Drama",
+			imdbRating: 8.9,
+			director: "Peter Jackson",
+			year: 2003,
+			dateAdded: new Date().toISOString(),
+		},
+		{
+			title: "Forrest Gump",
+			actors: ["Tom Hanks", "Robin Wright", "Gary Sinise"],
+			plot: "The presidencies of Kennedy and Johnson, the events of Vietnam, Watergate, and other historical events unfold through the perspective of an Alabama man with an IQ of 75, whose only desire is to be reunited with his childhood sweetheart.",
+			genre: "Drama, Romance",
+			imdbRating: 8.8,
+			director: "Robert Zemeckis",
+			year: 1994,
+			dateAdded: new Date().toISOString(),
+		},
+		{
+			title: "Inception",
+			actors: ["Leonardo DiCaprio", "Joseph Gordon-Levitt", "Ellen Page"],
+			plot: "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an ideainto the mind of a C.E.O.",
+			genre: "Action, Adventure, Sci-Fi",
+			imdbRating: 8.8,
+			director: "Christopher Nolan",
+			year: 2010,
+			dateAdded: new Date().toISOString(),
+		},
+		{
+			title: "The Matrix",
+			actors: ["Keanu Reeves", "Laurence Fishburne", "Carrie-Anne Moss"],
+			plot: "A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.",
+			genre: "Action, Sci-Fi",
+			imdbRating: 8.7,
+			director: "Lana Wachowski, Lilly Wachowski",
+			year: 1999,
+			dateAdded: new Date().toISOString(),
+		},
+		{
+			title: "Schindler's List",
+			actors: ["Liam Neeson", "Ben Kingsley", "Ralph Fiennes"],
+			plot: "In German-occupied Poland during World War II, industrialist Oskar Schindler gradually becomes concerned for his Jewish workforce after witnessing their persecution by the Nazis.",
+			genre: "Biography, Drama, History",
+			imdbRating: 8.9,
+			director: "Steven Spielberg",
+			year: 1993,
+			dateAdded: new Date().toISOString(),
+		},
+		{
+			title: "Goodfellas",
+			actors: ["Robert De Niro", "Ray Liotta", "Joe Pesci"],
+			plot: "The story of Henry Hill and his life in the mob, covering his relationship with his wife Karen Hill and his mob partners Jimmy Conway and Tommy DeVito in the Italian-American crime syndicate.",
+			genre: "Crime, Drama",
+			imdbRating: 8.7,
+			director: "Martin Scorsese",
+			year: 1990,
+			dateAdded: new Date().toISOString(),
+		},
+	];
 
-  // Event handler that is called when the form is submitted. Prevents default. Creates object with movies properties. Resets all of the form input fields. 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const newMovie = { title, director, actors, plot, year, imdbRating };
-    setMovies([...movies, newMovie]);
-    setTitle('');
-    setDirector('');
-    setActors('');
-    setPlot('');
-    setYear(0);
-    setImdbRating(0);
-  };
+  //we make a hook for movies into the state
+  // because we are in a function
+  const [movies, setMovies] = useState(moviesData);
 
-  const handleDelete = (index) => {
-    const updatedMovies = movies.filter((movie, i) => i !== index);
-    setMovies(updatedMovies);
-  };
-//need labels to correspond to the fields in the form
+  const addMovie = (movie) => {
+     setMovies([...movies, movie]);
+  }
 
-//need labels to correspond to the fields in the form
-return (
-  <div className="App">
-    <form onSubmit={handleSubmit}>
-      <h2>Add Movie</h2>
-      <label htmlFor="title">Title:</label>
-      <input
-        type="text"
-        id="title"
-        value={title}
-        onChange={(event) => setTitle(event.target.value)}
-      />
+  const removeMovie = (toDelIdx) => {
+    const filteredMovies = movies.filter((_, index) => {
+       return index !== toDelIdx
+    })
+    setMovies(filteredMovies)
+  }
 
-      <label htmlFor="director">Director:</label>
-      <input
-        type="text"
-        id="director"
-        value={director}
-        onChange={(event)=>setDirector(event.target.value)}
-      />
+  const resetSearch = () => {
+	setMovies(moviesData);
+  }
 
-      <label htmlFor="actors">Actors:</label>
-      <input
-        type="text"
-        id="actors"
-        value={actors}
-        onChange={(event)=>setActors(event.target.value)}
-      />
+  const filterMovies = (input, field) => {
 
-      <label htmlFor="plot">Plot:</label>
-      <input
-        type="text"
-        id="plot"
-        value={plot}
-        onChange={(event) => setPlot(event.target.value)}
-      />
+	// //show all films if there is no query 
+	// if (searchField.trim().length === 0) {
+	// 	setMovies(moviesData);
+	// 	return;
+	// }
 
-      <label htmlFor="year">Year:</label>
-      <input
-        type="number"
-        id="year"
-        value={year}
-        onChange={(event) => setYear(parseInt(event.target.value))}
-      />
+	 const moviesFiltered = movies.filter((movie) => {
+		   return movie[field].toLowerCase().includes(input.toLowerCase())
+	 })
 
-      <label htmlFor="imdbRating">IMDB Rating:</label>
-      <input
-        type="number"
-        id="imdbRating"
-        value={imdbRating}
-        step={0.1}
-        onChange={(event) => setImdbRating(parseFloat(event.target.value))}
-      />
+	 setMovies(moviesFiltered)
+  } 
+  
+  
 
-      <button type="submit">Add Movie</button>
-      <table>
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>Director</th>
-          <th>Actors</th>
-          <th>Plot</th>
-          <th>Year</th>
-          <th>IMDB Rating</th>
-          <th>Delete</th>
-        </tr>
-      </thead>
-      <tbody>
-        {movies.map((movie, index) => (
-          <tr key={index}>
-            <td>{movie.title}</td>
-            <td>{movie.director}</td>
-            <td>{movie.actors}</td>
-            <td>{movie.plot}</td>
-            <td>{movie.year}</td>
-            <td>{movie.imdbRating}</td>
-            <td>
-              <button onClick={() => handleDelete(index)}>Delete</button>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-    </form>
-  </div>
-);
+  return (
+ <div className="App">
+  <SearchBar	
+	filterMovies={filterMovies}
+	resetSearch={resetSearch}
+  />
+  <Table 
+     movies={movies}
+     removeMovie={removeMovie}
+	
+  />
+  <MovieForm 
+    addMovie={addMovie}
+  />
+</div>
+  );
 }
 
-export default App; 
-
+export default App;
