@@ -72,13 +72,13 @@ const Table = (props) => {
    } = props;
 
    return ( 
-     <Table>
+     <table>
        <TableHeader/>
        <TableBody 
          data={movies} 
          removeMovie={removeMovie}
        />
-     </Table>
+     </table>
    )
 }
 

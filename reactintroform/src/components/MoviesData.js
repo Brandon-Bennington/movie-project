@@ -1,4 +1,4 @@
-export const MoviesData = [
+export const moviesData = [
     {
       title: "The Godfather",
       actors: ["Marlon Brando", "Al Pacino", "James Caan"],
@@ -103,4 +103,4 @@ export const MoviesData = [
       
   ];
 
-  export default MoviesData;
+  export default moviesData;
