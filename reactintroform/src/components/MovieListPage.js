@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Table from './Table';
 import MovieForm from './MovieForm';
-import MoviesData from './moviesData';
+import MoviesData from './MoviesData';
 
 function MovieListPage() {
   const [movies, setMovies] = useState(MoviesData);
