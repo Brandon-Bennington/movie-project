@@ -3,10 +3,11 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import MovieListPage from './components/MovieListPage';
 import MoviePage from './components/MoviePage';
+import HomePage from './components/HomePage'; 
+import moviesData from './components/MoviesData';
 
 function App() {
-  const [movies, setMovies] = useState([]);
-
+  const [movies, setMovies] = useState(moviesData);
   const addMovie = (movie) => {
     setMovies([...movies, movie]);
   };
@@ -23,8 +24,9 @@ function App() {
       <Router>
         <NavBar />
         <Routes>
-          <Route path="/" element={<MovieListPage movies={movies} addMovie={addMovie} removeMovie={removeMovie} />} />
-          <Route path="/movie/:id" element={<MoviePage movies={movies} />} />
+          <Route path="/" element={<HomePage />} /> {}
+          <Route path="/movies" element={<MovieListPage movies={movies} addMovie={addMovie} removeMovie={removeMovie} />} />
+          <Route path="/movies/:filmTitle" element={<MoviePage movies={movies} />} />
         </Routes>
       </Router>
     </div>
